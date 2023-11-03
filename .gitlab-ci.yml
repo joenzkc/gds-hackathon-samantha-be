@@ -1,0 +1,15 @@
+include:
+  - project: wog/gvt/cstack/groups/references/pipelines/tenant-pipeline
+    ref: main
+    file: single-container/.gitlab-ci.yml
+
+  - project: wog/gvt/cstack/groups/references/pipelines/tenant-pipeline
+    ref: chore/addon-pipelines
+    file: single-container/addons/trigger-images-update.yml
+
+update-image:
+  stage: .post
+  extends: .trigger-images-update
+  variables:
+    MANIFEST_REPO: "wog/gvt/cstack/groups/tenants/internet/gvt-hack-samantha/cstack-manifests"
+    UPDATE_IMAGES: "prd:${UPDATER_APP_IMAGE}"
